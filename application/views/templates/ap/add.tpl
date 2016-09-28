@@ -38,12 +38,44 @@
                                         $(function mapInit() {
 
                                             map = new OpenLayers.Map({
-                                                div: "map",
-                                                projection: projection3857,
-                                                displayProjection: projection4326
+                                                div: "map"
                                             });
 
-                                            map.addLayer(new OpenLayers.Layer.OSM());
+                                            //map.addLayer(new OpenLayers.Layer.OSM());
+
+                                            //Create Google Map Layer objects
+                                            var google_hybrid = new OpenLayers.Layer.Google(
+                                                    "Google Hybrid", {
+                                                        type: google.maps.MapTypeId.HYBRID,
+                                                        numZoomLevels: 20
+                                                    });
+                                            var google_physical = new OpenLayers.Layer.Google(
+                                                    "Google Physical", {
+                                                        type: google.maps.MapTypeId.TERRAIN
+                                                    });
+                                            var google_satellite = new OpenLayers.Layer.Google(
+                                                    "Google Satellite", {
+                                                        type: google.maps.MapTypeId.SATELLITE,
+                                                        numZoomLevels: 22
+                                                    });
+
+                                            //Google streets is the normal map type, so we don't need to pass in a type
+                                            var google_streets = new OpenLayers.Layer.Google(
+                                                    "Google Streets", {
+                                                        numZoomLevels: 20
+                                                    });
+
+                                            //Add the google map layers
+                                            map.addLayers([google_hybrid, google_physical, google_satellite, google_streets]);
+
+
+                                            //Add a layer switcher control
+                                            map.addControl(new OpenLayers.Control.LayerSwitcher());
+
+                                            // Zoom the map to the max extent
+                                            if (!map.getCenter()) {
+                                                map.zoomToMaxExtent();
+                                            }
 
                                             map.setCenter(deflonlat, 10);
 
@@ -51,26 +83,26 @@
                                             var iconsize = new OpenLayers.Size(48, 48);
                                             var point = new OpenLayers.Pixel(-(iconsize.w / 2), -(iconsize.h / 2));
                                     {/literal}
-                                                    var icon = new OpenLayers.Icon({$base} + 'common/images/wifiicon_mod.png', iconsize, point);
+                                            var icon = new OpenLayers.Icon({$base} + 'common/images/wifiicon_mod.png', iconsize, point);
                                     {literal}
-                                                    var marker = new OpenLayers.Marker(deflonlat, icon);
+                                            var marker = new OpenLayers.Marker(deflonlat, icon);
 
-                                                    markers.addMarker(marker);
-                                                    map.addLayer(markers);
+                                            markers.addMarker(marker);
+                                            map.addLayer(markers);
 
-                                                    map.events.register('mouseup', map, onClick);
+                                            map.events.register('mouseup', map, onClick);
 
-                                                    function onClick(evt) {
-                                                        var lonlat = map.getLonLatFromViewPortPx(evt.xy);
-                                                        lonlat.transform(projection3857, projection4326);
-                                                        $("#lat").val(lonlat.lat);
-                                                        $("#lon").val(lonlat.lon);
+                                            function onClick(evt) {
+                                                var lonlat = map.getLonLatFromViewPortPx(evt.xy);
+                                                lonlat.transform(projection3857, projection4326);
+                                                $("#lat").val(lonlat.lat);
+                                                $("#lon").val(lonlat.lon);
 
-                                                        var opx = map.getLayerPxFromViewPortPx(evt.xy);
-                                                        marker.map = map;
-                                                        marker.moveTo(opx);
-                                                    }
-                                                });
+                                                var opx = map.getLayerPxFromViewPortPx(evt.xy);
+                                                marker.map = map;
+                                                marker.moveTo(opx);
+                                            }
+                                        });
                                     </script>
                                 {/literal}
                                 経度：<input type="text" id="lon" name="lon">
