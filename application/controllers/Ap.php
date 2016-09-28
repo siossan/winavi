@@ -67,8 +67,6 @@ class Ap extends MY_Controller {
             $address = $prefecture . $city . $location;
         }
 
-        var_dump($result);
-
         // 自動翻訳（マイクロソフト）
         $access_token = $this->getAccessToken("MinaVi", "axz4I4ym7trCLS4RSt3eaNc5FPHo0X1wYci7M8WdXyE=")->access_token;
 

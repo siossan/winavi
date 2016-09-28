@@ -80,7 +80,16 @@
                                             marker.bad = {$v.bad};
 
                                             // マーカーがクリックされた際のイベントを登録                      
-                                            marker.events.register('mousedown', marker, onMarkerClick);
+//                                            marker.events.register('mousedown', marker, onMarkerClick);
+                                            marker.events.on({
+                                                click: function (ev) {
+                                                    onMarkerClick(ev);
+                                                },
+                                                touchstart: function (ev) {
+                                                    onMarkerClick(ev);
+                                                }
+                                            });
+
 
                                             markers.addMarker(marker);
                                     {/foreach}
