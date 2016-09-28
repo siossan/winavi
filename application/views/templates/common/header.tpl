@@ -60,8 +60,7 @@
         <!-- GoogleMaps -->
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&hl=ja&key=AIzaSyBB1km49ZRHx-2Nnof35MI3NQvQtJ-29zE"></script>
-        
+
     </head>
     <body>
 
