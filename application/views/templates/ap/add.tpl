@@ -11,7 +11,7 @@
         <form action="{$base}ap/accept" method="post">
 
             <div class="span9">
-                <div class="answer_comment"><div class="arw"></div>新しいWi-Fiアクセスポイントを設定してください</div>
+                <div class="answer_comment"><div class="arw"></div>新しいWi-Fiアクセスポイントを設定してください<br />まずはWi-Fiスポットの場所を地図の中央に表示してください</div>
                 <?php echo validation_errors('title'); ?>
                 {*
                 <div class="naviko">
@@ -24,7 +24,6 @@
                         <tr>
                             <td>
                                 <div id="map" style="width:100%; height:500px" onload="mapInit();"></div>
-                                {literal}
                                     <script>
                                         var map;
                                         var projection3857 = new OpenLayers.Projection("EPSG:3857");
@@ -35,6 +34,10 @@
                                         var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
                                         var marker;
 
+                                        // アイコンサイズと描画位置情報(x,y)
+                                        var iconsize = new OpenLayers.Size(48, 48);
+                                        var point = new OpenLayers.Pixel(-(iconsize.w / 2), -(iconsize.h / 2));
+                                        var icon = new OpenLayers.Icon({$base} + 'common/images/wifiicon_mod.png', iconsize, point);
 
                                         $(function mapInit() {
 
@@ -62,15 +65,8 @@
                                                 $("#lat").val(lonlat.lat);
                                                 $("#lon").val(lonlat.lon);
 
-
-                                                // アイコンサイズと描画位置情報(x,y)
-                                                var iconsize = new OpenLayers.Size(48, 48);
-                                                var point = new OpenLayers.Pixel(-(iconsize.w / 2), -(iconsize.h / 2));
-                                    {/literal}
-                                                var icon = new OpenLayers.Icon({$base} + 'common/images/wifiicon_mod.png', iconsize, point);
-                                    {literal}
                                                 if(marker){
-                                                    marker.destroy();
+                                                    marker.erase()
                                                 }
                                                 marker = new OpenLayers.Marker(lonlat, icon);
                                                 markers.addMarker(marker);
@@ -79,7 +75,6 @@
                                             }
                                         });
                                     </script>
-                                {/literal}
                                 経度：<input type="text" id="lon" name="lon">
                                 緯度：<input type="text" id="lat" name="lat">
                             </td>
