@@ -43,13 +43,12 @@
 
                                         map = new OpenLayers.Map({
                                             div: "map",
-                                            eventListeners: {
-                                                'moveend': onClick
-                                            },
                                             projection: projection3857,
                                             displayProjection: projection4326
 
                                         });
+                                        
+                                        map.events.register('moveend', map, onClick);
 
                                         map.addLayer(new OpenLayers.Layer.OSM());
 
@@ -58,7 +57,6 @@
                                         markers.addMarker(marker);
                                         map.addLayer(markers);
 
-                                        //map.events.register('mouseup', map, onClick);
 
                                         function onClick(evt) {
                                             var lonlat = map.getCenter();
@@ -69,14 +67,13 @@
                                             marker = new OpenLayers.Marker(lonlat, icon);
                                             markers.addMarker(marker);
                                             map.addLayer(markers);
+                                            lonlat.transform(projection3857, projection4326);
+                                            $("#lat").val(lonlat.lat);
+                                            $("#lon").val(lonlat.lon);
 
-                                            //map.events.register('mouseup', map, onClick);
-
-                                            function onClick(evt) {
-                                                var lonlat = map.getCenter();
-                                                $("#lat").val(lonlat.lat);
-                                                $("#lon").val(lonlat.lon);
-
+                                        }
+                                    });
+                                </script>
                                 経度：<input type="text" id="lon" name="lon">
                                 緯度：<input type="text" id="lat" name="lat">
                             </td>
