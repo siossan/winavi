@@ -24,37 +24,49 @@
                         <tr>
                             <td>
                                 <div id="map" style="width:100%; height:500px" onload="mapInit();"></div>
-                                    <script>
-                                        var map;
-                                        var projection3857 = new OpenLayers.Projection("EPSG:3857");
-                                        var projection4326 = new OpenLayers.Projection("EPSG:4326");
-                                        var deflonlat = new OpenLayers.LonLat(141.349557, 43.068856).transform(projection4326, projection3857);
-                                        var markers = new OpenLayers.Layer.Markers("Markers");
-                                        var size = new OpenLayers.Size(34, 37);
-                                        var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
-                                        var marker;
+                                <script>
+                                    var map;
+                                    var projection3857 = new OpenLayers.Projection("EPSG:3857");
+                                    var projection4326 = new OpenLayers.Projection("EPSG:4326");
+                                    var deflonlat = new OpenLayers.LonLat(141.349557, 43.068856).transform(projection4326, projection3857);
+                                    var markers = new OpenLayers.Layer.Markers("Markers");
+                                    var size = new OpenLayers.Size(34, 37);
+                                    var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+                                    var marker;
 
-                                        // アイコンサイズと描画位置情報(x,y)
-                                        var iconsize = new OpenLayers.Size(48, 48);
-                                        var point = new OpenLayers.Pixel(-(iconsize.w / 2), -(iconsize.h / 2));
-                                        var icon = new OpenLayers.Icon({$base} + 'common/images/wifiicon_mod.png', iconsize, point);
+                                    // アイコンサイズと描画位置情報(x,y)
+                                    var iconsize = new OpenLayers.Size(48, 48);
+                                    var point = new OpenLayers.Pixel(-(iconsize.w / 2), -(iconsize.h / 2));
+                                    var icon = new OpenLayers.Icon({$base} + 'common/images/wifiicon_mod.png', iconsize, point);
 
-                                        $(function mapInit() {
+                                    $(function mapInit() {
 
-                                            map = new OpenLayers.Map({
-                                                div: "map",
-                                                eventListeners: {
-                                                    'moveend': onClick
-                                                },
-                                                projection: projection3857,
-                                                displayProjection: projection4326
+                                        map = new OpenLayers.Map({
+                                            div: "map",
+                                            eventListeners: {
+                                                'moveend': onClick
+                                            },
+                                            projection: projection3857,
+                                            displayProjection: projection4326
 
-                                            });
+                                        });
 
-                                            map.addLayer(new OpenLayers.Layer.OSM());
+                                        map.addLayer(new OpenLayers.Layer.OSM());
 
-                                            map.setCenter(deflonlat, 10);
+                                        map.setCenter(deflonlat, 10);
 
+                                        markers.addMarker(marker);
+                                        map.addLayer(markers);
+
+                                        //map.events.register('mouseup', map, onClick);
+
+                                        function onClick(evt) {
+                                            var lonlat = map.getCenter();
+
+                                            if (marker) {
+                                                marker.erase()
+                                            }
+                                            marker = new OpenLayers.Marker(lonlat, icon);
                                             markers.addMarker(marker);
                                             map.addLayer(markers);
 
@@ -65,16 +77,6 @@
                                                 $("#lat").val(lonlat.lat);
                                                 $("#lon").val(lonlat.lon);
 
-                                                if(marker){
-                                                    marker.erase()
-                                                }
-                                                marker = new OpenLayers.Marker(lonlat, icon);
-                                                markers.addMarker(marker);
-                                                map.addLayer(markers);
-
-                                            }
-                                        });
-                                    </script>
                                 経度：<input type="text" id="lon" name="lon">
                                 緯度：<input type="text" id="lat" name="lat">
                             </td>
