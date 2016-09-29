@@ -79,17 +79,7 @@
                                                         },
                                                         option
                                                         );
-                                                /* watchPosition */
-                                                var watch = 'watch-position';
-                                                navigator.geolocation.watchPosition(
-                                                        function (position) {
-                                                            success(watch, position);
-                                                        },
-                                                        function (error) {
-                                                            err(watch, error);
-                                                        },
-                                                        option
-                                                        );
+
                                             }
 
                                             // 位置情報の取得に成功した時の処理

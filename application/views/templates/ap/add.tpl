@@ -79,17 +79,6 @@
                                                     },
                                                     option
                                                     );
-                                            /* watchPosition */
-                                            var watch = 'watch-position';
-                                            navigator.geolocation.watchPosition(
-                                                    function (position) {
-                                                        success(watch, position);
-                                                    },
-                                                    function (error) {
-                                                        err(watch, error);
-                                                    },
-                                                    option
-                                                    );
                                         }
 
                                         map.events.register('moveend', map, onClick);
