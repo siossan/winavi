@@ -11,7 +11,7 @@
         <form action="{$base}ap/accept" method="post">
 
             <div class="span9">
-                <div class="answer_comment"><div class="arw"></div>新しいWi-Fiアクセスポイントを設定してください<br />まずはWi-Fiスポットの場所を地図の中央に表示してください</div>
+                <div class="answer_comment"><div class="arw"></div>{$lang.comment_add}<br />{$lang.comment_center}</div>
                 <?php echo validation_errors('title'); ?>
                 {*
                 <div class="naviko">
@@ -19,7 +19,7 @@
                 </div><!--nabiko-->
                 *}
                 <h3 class="page-title">
-                    場所 <small>場所を選択</small>
+                    {$lang.label_place} <small>{$lang.attention}</small>
                     <table class="form">
                         <tr>
                             <td>
@@ -143,25 +143,25 @@
 
                                     );
                                 </script>
-                                経度：<input type="text" id="lon" name="lon">
-                                緯度：<input type="text" id="lat" name="lat">
+                                {$lang.label_lon}：<input type="text" id="lon" name="lon">
+                                {$lang.label_lat}：<input type="text" id="lat" name="lat">
                             </td>
                         </tr>
                         <tr>
-                            <th>施設名</th>
+                            <th>{$lang.label_location_name}</th>
                         </tr>
                         <tr>
                             <td><input type="text" name="location_name"></td>
                         </tr>
                         <tr>
-                            <th>備考</th>
+                            <th>{$lang.label_memo}</th>
                         </tr>
                         <tr>
                             <td><textarea name="memo"></textarea></td>
                         </tr>
                     </table>
                 </h3>
-                <p><input type="submit" value="決定！" class="btn btn-primary btn-large"></p>
+                <p><input type="submit" value="{$lang.label_submit}" class="btn btn-primary btn-large"></p>
 
             </div><!--/span-->
 

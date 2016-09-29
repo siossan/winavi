@@ -131,8 +131,8 @@
                                             var marker = new OpenLayers.Marker(deflonlat, icon);
 
                                             marker.tag = '<span style="color:red;">{$v.location_name}</span>\n\
-                                                            <br />住所：{$v.address}&nbsp;&nbsp;&nbsp;\n\
-                                                            <br />備考：{$v.memo}<br />';
+                                                            <br />{$lang.label_address}：{$v.address}&nbsp;&nbsp;&nbsp;\n\
+                                                            <br />{$lang.label_memo}：{$v.memo}<br />';
                                             marker.x = {$v.x};
                                             marker.y = {$v.y};
 
@@ -218,7 +218,7 @@
                         <tr id="eval" style="display: none;">
                             <td style="width: 10%;"><a class="goodButton" onclick="onGood();">Good!</a>good/<span id="goodnum">0</span>人</td>
                             <td style="width: 10%;"><a class="badButton" onclick="onBad();">Bad...</a>bad/<span id="badnum">0</span>人</td>
-                            <td style="position: absolute; right:0;"><a class="badButton"  onclick="onProblem();">APが存在しない/位置ずれ　報告</a></td>
+                            <td style="position: absolute; right:0;"><a class="badButton"  onclick="onProblem();">{$lang.button_notfound}</a></td>
                         </tr>
                     </table>
                 </h3>

@@ -19,7 +19,7 @@ class Aps_model extends CI_Model {
     public function getAps() {
         $sql = 'SELECT * FROM aps';
         $query = $this->db->query($sql);
-        if ($this->db->query($sql)) {
+        if ($query) {
             // 成功処理
             $result = $query->result('array');
             return $result;
@@ -49,6 +49,22 @@ class Aps_model extends CI_Model {
         if ($this->db->query($sql)) {
             // 成功処理
             return true;
+        } else {
+            // 失敗処理
+            return false;
+        }
+    }
+    
+    
+    public function getApsDistOnekm($lon, $lat) {
+        $params = array($lat, $lon);
+        $sql = "SELECT * FROM aps WHERE "
+                . " GLENGTH(GEOMFROMTEXT( CONCAT('LINESTRING(',y,' ',x,',',?,' ',?, ')' )))  <= 0.008";
+        $query = $this->db->query($sql, $params);
+        if ($query) {
+            // 成功処理
+            $result = $query->result('array');
+            return $result;
         } else {
             // 失敗処理
             return false;

@@ -120,4 +120,17 @@ class Ap extends MY_Controller {
         return $m[1];
     }
 
+    function getaps($lon = null, $lat = null) {
+        $this->load->model('Aps_model', '', TRUE);
+
+        if ($lon != null && $lat != null) {
+            $result = $this->Aps_model->getApsDistOnekm($lon, $lat);
+        } else {
+            $result = $this->Aps_model->getAps();
+        }
+        header("Content-Type: application/json; charset=utf-8");
+        echo json_encode( $result , JSON_UNESCAPED_UNICODE );
+        exit;
+    }
+
 }
