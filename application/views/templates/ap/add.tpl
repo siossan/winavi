@@ -103,6 +103,7 @@
                                             var speed = position.coords.speed;             //速
 
                                             deflonlat = new OpenLayers.LonLat(lon, lat).transform(projection4326, projection3857);
+                                            map.setCenter(deflonlat, 10);
                                         }
 
                                         // 位置情報の取得に失敗した場合の処理
@@ -121,7 +122,7 @@
                                             }
                                             $('#' + id + " .status").html("エラー：" + e);
                                         }
-                                        
+
                                         map.events.register('moveend', map, onClick);
 
                                         map.addLayer(new OpenLayers.Layer.OSM());
