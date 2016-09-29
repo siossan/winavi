@@ -36,6 +36,7 @@
                                         var size = new OpenLayers.Size(34, 37);
                                         var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
 
+                                        var center = new OpenLayers.LonLat(141.349557, 43.068856).transform(projection4326, projection3857);
                                         var pointFeature;
                                         var vectorPoint;
                                         var selectId = 0;
@@ -48,11 +49,81 @@
                                                 displayProjection: projection900913
                                             });
 
+
                                             map.addLayer(new OpenLayers.Layer.OSM());
+                                            map.setCenter(center, 16);
 
-                                            var center = new OpenLayers.LonLat(141.349557, 43.068856).transform(projection4326, projection900913);
-                                            map.setCenter(center, 10);
 
+                                            /*
+                                             Geolocation（緯度・経度）
+                                             getCurrentPosition :or: watchPosition
+                                             */
+                                            // 対応しているかチェック
+                                            if (!navigator.geolocation) {
+                                                alert("navigator.geolocation の対応しているブラウザを使用してください。");
+                                            } else {
+                                                /* 位置情報取得オプション option object */
+                                                var option = {
+                                                    enableHighAccuracy: true, // より高精度な位置を求める
+                                                    maximumAge: 1, // 最後の現在地情報取得が [maximuAge][ms]以内であればその情報を再利用する設定
+                                                    timeout: 10000          // timeout[ms]以内に現在地情報を取得できなければ、処理を終了
+                                                };
+                                                /* CurrentPosition */
+                                                var current = 'current-position';
+                                                navigator.geolocation.getCurrentPosition(
+                                                        function (position) {
+                                                            success(current, position);
+                                                        },
+                                                        function (error) {
+                                                            err(current, error);
+                                                        },
+                                                        option
+                                                        );
+                                                /* watchPosition */
+                                                var watch = 'watch-position';
+                                                navigator.geolocation.watchPosition(
+                                                        function (position) {
+                                                            success(watch, position);
+                                                        },
+                                                        function (error) {
+                                                            err(watch, error);
+                                                        },
+                                                        option
+                                                        );
+                                            }
+
+                                            // 位置情報の取得に成功した時の処理
+                                            function success(id, position) {
+                                                var time = position.timestamp;                 //タイムスタンプ
+                                                var lat = position.coords.latitude;            //緯度
+                                                var lon = position.coords.longitude;           //経度
+                                                var alt = position.coords.altitude;            //高度
+                                                var acc = position.coords.accuracy;            //正確性
+                                                var alt_acc = position.coords.altitudeAccuracy;//高度の正確性
+                                                var heading = position.coords.heading;         //方位
+                                                var speed = position.coords.speed;             //速
+
+                                                center = new OpenLayers.LonLat(lon, lat).transform(projection4326, projection3857);
+
+                                                map.setCenter(center, 16);
+                                            }
+
+                                            // 位置情報の取得に失敗した場合の処理
+                                            function err(id, error) {
+
+                                                locationErrFlg = true;
+                                                var e = "";
+                                                if (error.code == 1) { //1＝位置情報取得が許可されてない（ブラウザの設定）
+                                                    e = "位置情報が許可されてません";
+                                                }
+                                                if (error.code == 2) { //2＝現在地を特定できない
+                                                    e = "現在位置を特定できません";
+                                                }
+                                                if (error.code == 3) { //3＝位置情報を取得する前にタイムアウトになった場合
+                                                    e = "位置情報を取得する前にタイムアウトになりました";
+                                                }
+                                                $('#' + id + " .status").html("エラー：" + e);
+                                            }
                                             // アイコンサイズと描画位置情報(x,y)
                                             var iconsize = new OpenLayers.Size(48, 48);
                                             var point = new OpenLayers.Pixel(-(iconsize.w / 2), -(iconsize.h / 2));
@@ -125,82 +196,9 @@
                                             }
 
 
-                                            /*
-                                             Geolocation（緯度・経度）
-                                             getCurrentPosition :or: watchPosition
-                                             */
-                                            // 対応しているかチェック
-                                            if (!navigator.geolocation) {
-                                                alert("navigator.geolocation の対応しているブラウザを使用してください。");
-                                            } else {
-                                                /* 位置情報取得オプション option object */
-                                                var option = {
-                                                    enableHighAccuracy: true, // より高精度な位置を求める
-                                                    maximumAge: 1, // 最後の現在地情報取得が [maximuAge][ms]以内であればその情報を再利用する設定
-                                                    timeout: 10000          // timeout[ms]以内に現在地情報を取得できなければ、処理を終了
-                                                };
-                                                /* CurrentPosition */
-                                                var current = 'current-position';
-                                                navigator.geolocation.getCurrentPosition(
-                                                        function (position) {
-                                                            success(current, position);
-                                                        },
-                                                        function (error) {
-                                                            err(current, error);
-                                                        },
-                                                        option
-                                                        );
-                                                /* watchPosition */
-                                                var watch = 'watch-position';
-                                                navigator.geolocation.watchPosition(
-                                                        function (position) {
-                                                            success(watch, position);
-                                                        },
-                                                        function (error) {
-                                                            err(watch, error);
-                                                        },
-                                                        option
-                                                        );
-                                            }
-
-                                            // 位置情報の取得に成功した時の処理
-                                            function success(id, position) {
-                                                var time = position.timestamp;                 //タイムスタンプ
-                                                var lat = position.coords.latitude;            //緯度
-                                                var lon = position.coords.longitude;           //経度
-                                                var alt = position.coords.altitude;            //高度
-                                                var acc = position.coords.accuracy;            //正確性
-                                                var alt_acc = position.coords.altitudeAccuracy;//高度の正確性
-                                                var heading = position.coords.heading;         //方位
-                                                var speed = position.coords.speed;             //速
-
-                                                deflonlat = new OpenLayers.LonLat(lon, lat).transform(projection4326, projection3857);
-                                                map.setCenter(deflonlat, 16);
-                                            }
-
-                                            // 位置情報の取得に失敗した場合の処理
-                                            function err(id, error) {
-
-                                                locationErrFlg = true;
-                                                var e = "";
-                                                if (error.code == 1) { //1＝位置情報取得が許可されてない（ブラウザの設定）
-                                                    e = "位置情報が許可されてません";
-                                                }
-                                                if (error.code == 2) { //2＝現在地を特定できない
-                                                    e = "現在位置を特定できません";
-                                                }
-                                                if (error.code == 3) { //3＝位置情報を取得する前にタイムアウトになった場合
-                                                    e = "位置情報を取得する前にタイムアウトになりました";
-                                                }
-                                                $('#' + id + " .status").html("エラー：" + e);
-                                            }
                                         }
 
-
-
                                         );
-
-
                                         //and finally build a function to do the buffering
 
 

@@ -52,30 +52,6 @@
 
                                         });
 
-                                        map.events.register('moveend', map, onClick);
-
-                                        map.addLayer(new OpenLayers.Layer.OSM());
-
-                                        map.setCenter(deflonlat, 10);
-
-                                        markers.addMarker(marker);
-                                        map.addLayer(markers);
-
-
-                                        function onClick(evt) {
-                                            var lonlat = map.getCenter();
-
-                                            if (marker) {
-                                                marker.erase()
-                                            }
-                                            marker = new OpenLayers.Marker(lonlat, icon);
-                                            markers.addMarker(marker);
-                                            map.addLayer(markers);
-                                            lonlat.transform(projection3857, projection4326);
-                                            $("#lat").val(lonlat.lat);
-                                            $("#lon").val(lonlat.lon);
-
-                                        }
 
 
                                         /*
@@ -127,7 +103,6 @@
                                             var speed = position.coords.speed;             //速
 
                                             deflonlat = new OpenLayers.LonLat(lon, lat).transform(projection4326, projection3857);
-                                            map.setCenter(deflonlat, 16);
                                         }
 
                                         // 位置情報の取得に失敗した場合の処理
@@ -146,6 +121,33 @@
                                             }
                                             $('#' + id + " .status").html("エラー：" + e);
                                         }
+                                        
+                                        map.events.register('moveend', map, onClick);
+
+                                        map.addLayer(new OpenLayers.Layer.OSM());
+
+                                        map.setCenter(deflonlat, 10);
+
+                                        markers.addMarker(marker);
+                                        map.addLayer(markers);
+
+
+                                        function onClick(evt) {
+                                            var lonlat = map.getCenter();
+
+                                            if (marker) {
+                                                marker.erase()
+                                            }
+                                            marker = new OpenLayers.Marker(lonlat, icon);
+                                            markers.addMarker(marker);
+                                            map.addLayer(markers);
+                                            lonlat.transform(projection3857, projection4326);
+                                            $("#lat").val(lonlat.lat);
+                                            $("#lon").val(lonlat.lon);
+
+                                        }
+
+
                                     }
 
 
