@@ -130,9 +130,16 @@
 
                                             var marker = new OpenLayers.Marker(deflonlat, icon);
 
+
+                                        {if $smarty.session.lang == 'en'}
+                                            marker.tag = '<span style="color:red;">{$v.location_name_en}</span>\n\
+                                                            <br />{$lang.label_address}：{$v.address_en}&nbsp;&nbsp;&nbsp;\n\
+                                                            <br />{$lang.label_memo}：{$v.memo_en}<br />';
+                                        {else}
                                             marker.tag = '<span style="color:red;">{$v.location_name}</span>\n\
                                                             <br />{$lang.label_address}：{$v.address}&nbsp;&nbsp;&nbsp;\n\
                                                             <br />{$lang.label_memo}：{$v.memo}<br />';
+                                        {/if}
                                             marker.x = {$v.x};
                                             marker.y = {$v.y};
 
