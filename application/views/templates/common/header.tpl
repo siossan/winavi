@@ -86,13 +86,15 @@
                         <ul class="nav">
                             <li><a href="{$base}ap/aplist"><i class="icon-comment"></i>{$lang.menu_find}</a></li>
                             <li><a href="{$base}ap/add"><i class="icon-comment"></i>{$lang.menu_add}</a></li>
-                            <li class="dropdown">
+                                    <li><a href="{$base}ap/aplist?lang=jp">日本語</a></li>
+                                    <li><a href="{$base}ap/aplist?lang=en">ENGLISH</a></li>
+{*                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-map-marker"></i>{$lang.menu_select}<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="{$base}ap/aplist?lang=jp">日本語</a></li>
                                     <li><a href="{$base}ap/aplist?lang=en">ENGLISH</a></li>
                                 </ul>
-                            </li>
+                            </li>*}
                         </ul>
                     </div><!--nav-collapse -->
                 </div><!--navbar-inner -->
