@@ -91,7 +91,33 @@
                                                     option
                                                     );
                                         }
-// 位置情報の取得に成功した時の処理
+
+                                        map.events.register('moveend', map, onClick);
+
+                                        map.addLayer(new OpenLayers.Layer.OSM());
+
+                                        map.setCenter(deflonlat, 10);
+
+                                        markers.addMarker(marker);
+                                        map.addLayer(markers);
+
+
+                                        function onClick(evt) {
+                                            var lonlat = map.getCenter();
+
+                                            if (marker) {
+                                                marker.erase()
+                                            }
+                                            marker = new OpenLayers.Marker(lonlat, icon);
+                                            markers.addMarker(marker);
+                                            map.addLayer(markers);
+                                            lonlat.transform(projection3857, projection4326);
+                                            $("#lat").val(lonlat.lat);
+                                            $("#lon").val(lonlat.lon);
+
+                                        }
+
+                                        // 位置情報の取得に成功した時の処理
                                         function success(id, position) {
                                             var time = position.timestamp;                 //タイムスタンプ
                                             var lat = position.coords.latitude;            //緯度
@@ -122,33 +148,6 @@
                                             }
                                             $('#' + id + " .status").html("エラー：" + e);
                                         }
-
-                                        map.events.register('moveend', map, onClick);
-
-                                        map.addLayer(new OpenLayers.Layer.OSM());
-
-                                        map.setCenter(deflonlat, 10);
-
-                                        markers.addMarker(marker);
-                                        map.addLayer(markers);
-
-
-                                        function onClick(evt) {
-                                            var lonlat = map.getCenter();
-
-                                            if (marker) {
-                                                marker.erase()
-                                            }
-                                            marker = new OpenLayers.Marker(lonlat, icon);
-                                            markers.addMarker(marker);
-                                            map.addLayer(markers);
-                                            lonlat.transform(projection3857, projection4326);
-                                            $("#lat").val(lonlat.lat);
-                                            $("#lon").val(lonlat.lon);
-
-                                        }
-
-
                                     }
 
 
