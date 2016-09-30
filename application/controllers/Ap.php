@@ -123,13 +123,13 @@ class Ap extends MY_Controller {
     function getaps($lon = null, $lat = null) {
         $this->load->model('Aps_model', '', TRUE);
 
-        if ($lon != null && $lat != null) {
+        if (!empty($lon) && !empty($lat)) {
             $result = $this->Aps_model->getApsDistOnekm($lon, $lat);
         } else {
             $result = $this->Aps_model->getAps();
         }
         header("Content-Type: application/json; charset=utf-8");
-        echo json_encode( $result , JSON_UNESCAPED_UNICODE );
+        echo json_encode( $result , 128 );
         exit;
     }
 
