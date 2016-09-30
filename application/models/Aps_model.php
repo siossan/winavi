@@ -17,7 +17,7 @@ class Aps_model extends CI_Model {
     }
 
     public function getAps() {
-        $sql = 'SELECT * FROM aps';
+        $sql = 'SELECT ap_id, location_name, location_name_en, address, address_en, memo, memo_en, is_opendata, x, y FROM aps';
         $query = $this->db->query($sql);
         if ($query) {
             // 成功処理
@@ -58,7 +58,7 @@ class Aps_model extends CI_Model {
     
     public function getApsDistOnekm($lon, $lat) {
         $params = array($lat, $lon);
-        $sql = "SELECT * FROM aps WHERE "
+        $sql = "SELECT ap_id, location_name, location_name_en, address, address_en, memo, memo_en, is_opendata, x, y FROM aps WHERE "
                 . " GLENGTH(GEOMFROMTEXT( CONCAT('LINESTRING(',y,' ',x,',',?,' ',?, ')' )))  <= 0.008";
         $query = $this->db->query($sql, $params);
         if ($query) {
