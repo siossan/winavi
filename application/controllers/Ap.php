@@ -21,6 +21,12 @@ class Ap extends MY_Controller {
             $result[$k]['good'] = $goodcount;
             $badcount = $this->Evaluations_model->getTypeCountByApId($v['ap_id'], 2);
             $result[$k]['bad'] = $badcount;
+            $notFndCount = $this->Evaluations_model->getTypeCountByApId($v['ap_id'], 3);
+            $result[$k]['not_found'] = $notFndCount;
+
+            if ($notFndCount > 5) {
+                unset($result[$k]);
+            }
         }
 
         $this->smarty->assign('list', $result);
@@ -158,7 +164,7 @@ class Ap extends MY_Controller {
      * @param unknown_type $str
      */
     function unicode_encode($str) {
-        
+
         return preg_replace_callback("/\\\\u([0-9a-zA-Z]{4})/", array(get_class($this), 'encode_callback'), $str);
     }
 
