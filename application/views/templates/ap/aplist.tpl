@@ -227,6 +227,12 @@
                             <td style="width: 10%;"><a class="badButton" onclick="onBad();">Bad...</a>bad/<span id="badnum">0</span>人</td>
                             <td style="position: absolute; right:0;"><a class="badButton"  onclick="onProblem();">{$lang.button_notfound}</a></td>
                         </tr>
+                        <tr>
+                            <td colspan="3">WinaViは以下の著作物を改変して利用しています。
+                                ［地方公共団体における公衆無線LAN設置状況一覧］、北海道
+                                クリエイティブ・コモンズ・ライセンス 表示2.1 日本（http://creativecommons.org/licenses/by/2.1/jp/）
+                            </td>
+                        </tr>
                     </table>
                 </h3>
             </div><!--/span-->
