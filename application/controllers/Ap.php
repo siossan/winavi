@@ -129,7 +129,7 @@ class Ap extends MY_Controller {
             $result = $this->Aps_model->getAps();
         }
         header("Content-Type: application/json; charset=utf-8");
-        echo json_encode( $result , 128 );
+        echo json_encode( $result , 256 );
         exit;
     }
 
