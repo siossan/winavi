@@ -24,7 +24,7 @@ class Ap extends MY_Controller {
             $notFndCount = $this->Evaluations_model->getTypeCountByApId($v['ap_id'], 3);
             $result[$k]['not_found'] = $notFndCount;
 
-            if ($notFndCount > 5) {
+            if ($notFndCount > 5 && $result[$k]['is_opendata'] == 0) {
                 unset($result[$k]);
             }
         }
